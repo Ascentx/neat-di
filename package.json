@@ -1,0 +1,47 @@
+{
+  "name": "neat-di",
+  "version": "1.0.0",
+  "description": "Scoped di for singleton and prototype objects.",
+  "main": "index.js",
+  "scripts": {
+    "test": "karma start",
+    "tsc": "tsc -p tsconfig.json -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ascentx/neat-di.git"
+  },
+  "keywords": [
+    "di",
+    "inversify",
+    "scope",
+    "based",
+    "ioc",
+    "typescipt",
+    "javascipt",
+    "singleton",
+    "prototype"
+  ],
+  "author": "“Amrinder Singh <“amsingh@stonewain.com”>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ascentx/neat-di/issues"
+  },
+  "homepage": "https://github.com/Ascentx/neat-di#readme",
+  "devDependencies": {
+    "jasmine-core": "^2.99.1",
+    "karma": "^2.0.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.1",
+    "karma-typescript": "^3.0.12",
+    "webpack": "^3.11.0"
+  },
+  "dependencies": {
+    "@types/core-js": "^0.9.46",
+    "@types/jasmine": "^2.8.6",
+    "core-js": "^2.5.3",
+    "es6-shim": "^0.35.3",
+    "reflect-metadata": "^0.1.12",
+    "typescript": "^2.7.2"
+  }
+}
