@@ -1,6 +1,9 @@
 import { ObjectFactory, ObjectFactoryArgs, Newable} from "../core/object-factory";
 
 export class DefaultObjectFactory implements ObjectFactory {
+    public static postHook: Function;
+    public static preHook: Function
+
     private static _instance: ObjectFactory = new DefaultObjectFactory();
     private _globalObjectMap: {[key: string]: any} = {};
     private _contextObjectMap: {[key: string]: any} = {};
@@ -52,20 +55,43 @@ export class DefaultObjectFactory implements ObjectFactory {
     }
 
     public getScopedObject(name: string, scopeId: string, constructorArgs?: Array<any>): any {
-        return this.createScopedObject({
+        let object: any;
+
+        if (DefaultObjectFactory.preHook) {
+            DefaultObjectFactory.preHook();
+        }
+
+        object = this.createScopedObject({
             name: name,
             scopeId: scopeId,
             constructorArgs: constructorArgs,
             objectClass: DefaultObjectFactory._nameClassMap[name]
         });
+
+        if (DefaultObjectFactory.postHook) {
+            DefaultObjectFactory.postHook();
+        }
+        return object;
+
     }
 
     public getGlobalObject(name: string, constructorArgs?: Array<any>): any {
-        return this.createGlobalObject({
+        let object: any;
+
+        if (DefaultObjectFactory.preHook) {
+            DefaultObjectFactory.preHook();
+        }
+
+        object = this.createGlobalObject({
             name: name,
             constructorArgs: constructorArgs,
             objectClass: DefaultObjectFactory._nameClassMap[name]
         });
+
+        if (DefaultObjectFactory.postHook) {
+            DefaultObjectFactory.postHook();
+        }
+        return object;
     }
 
     public getObject(name: string, scopeId?: string, constructorArgs?: Array<any>) {
