@@ -1,5 +1,5 @@
 import {MockInjectable} from './mock-injectable';
-import { Inject } from 'src/all';
+import { Inject } from '../../src/all';
 
 export class MockDi {
     @Inject('mock-injectable')
@@ -18,5 +18,5 @@ export class MockDi {
 
     public dynamicScopedInject(@Inject('mock-injectable', this.scope) mi?: MockInjectable): MockInjectable {
         return mi;
-    } 
+    }
 }

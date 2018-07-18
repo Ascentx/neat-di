@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { DefaultObjectFactory } from "src/impl/default-object-factory";
+import { DefaultObjectFactory } from "../impl/default-object-factory";
 
 const injectMetadataKey = Symbol("Inject");
 
