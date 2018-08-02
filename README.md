@@ -6,15 +6,17 @@ A lot of time we need singleton objects in js/ts world, But when things run on s
 Example:
 Lets create a sigleton with @Injectable and register it with object name 'mock-injectable'
 
+```typescript
 @Injectable('mock-injectable')
 export class MockInjectable {
     constructor() {
         
     }
 }
+```
 
 Now to use this object we ll use @Inject and name with which the object is registerd. In case of prototype or scope based sigleton the new objects in scope are created during the retreaval.
-
+```typescript
 export class MockDi {
     @Inject('mock-injectable')
     public globalMi1: MockInjectable; 
@@ -28,5 +30,5 @@ export class MockDi {
         return mi;
     }
 }
-
+```
 Thats about it.
