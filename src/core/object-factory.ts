@@ -7,16 +7,26 @@ export interface ObjectFactory {
     removeScopedObjects(scopeId: string, name?: string): Array<any>;
     removeAllObjects(name: string): Array<any>;
     getObject(name: string, scopeId?: string, constructorArgs?: Array<any>): any;
-    addToNameClassMap(name: string, className: Newable): void;
+    addToNameClassMap(name: string, className: Newable, isRequired?: boolean): void;
+    addToTargetMap(meta: TargetMeta);
+    init();
 }
 
 export interface ObjectFactoryArgs {
-    name: string,
-    scopeId?: string,
-    constructorArgs?: Array<any>,
-    objectClass: Newable
+    name: string;
+    scopeId?: string;
+    constructorArgs?: Array<any>;
+    objectClass: Newable;
+}
+
+export interface TargetMeta {
+    name: string;
+    scopeId?: string;
+    constructorArgs?: Array<any>;
+    target: Object;
+    key: string;
 }
 
 export interface Newable {
-    new(...args: Array<any>): any
+    new(...args: Array<any>): any;
 }

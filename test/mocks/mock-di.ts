@@ -1,7 +1,12 @@
 import {MockInjectable} from './mock-injectable';
-import { Inject } from '../../src/all';
+import { Inject, Injectable } from '../../src/all';
+import { MockInjectable2 } from './mock-injectable-2';
 
+@Injectable('MockDi')
 export class MockDi {
+    @Inject('mock-injectable-2')
+    public scopedMidependent: MockInjectable2;
+
     @Inject('mock-injectable')
     public globalMi1: MockInjectable;
 

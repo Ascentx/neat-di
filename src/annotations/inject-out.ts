@@ -4,16 +4,10 @@ import { ObjectFactory } from "src/core/object-factory";
 
 const injectMetadataKey = Symbol("Inject");
 
-export function Inject(name: string, scopeId?: string, constructorArgs?: Array<any>): any {
+export function InjectOut(name: string, scopeId?: string, constructorArgs?: Array<any>): any {
     return (target: Object, key: string) => {
         let of: ObjectFactory = DefaultObjectFactory.getInstance();
+        target[key] = of.getObject(name, scopeId, constructorArgs);
 
-        of.addToTargetMap({
-            name: name,
-            scopeId: scopeId,
-            constructorArgs: constructorArgs,
-            target: target,
-            key: key
-        });
     }
 }
