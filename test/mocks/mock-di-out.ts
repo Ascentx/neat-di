@@ -1,6 +1,6 @@
 import {MockInjectable} from './mock-injectable';
 import { Inject, InjectOut } from '../../src/all';
-import { MockInjectable2 } from './mock-injectable-2';
+import { MockInjectable2, MockInjectable6 } from './mock-injectable-2';
 
 export class MockDiOut {
     @InjectOut('mock-injectable-2')
@@ -17,6 +17,9 @@ export class MockDiOut {
 
     @InjectOut('mock-injectable', '2')
     public scopedMi2: MockInjectable;
+
+    @InjectOut('mock-injectable-6')
+    public depependentDi: MockInjectable6;
 
     public scope;
 
