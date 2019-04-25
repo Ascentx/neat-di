@@ -217,8 +217,3 @@ export class DefaultObjectFactory implements ObjectFactory {
         return [];
     }
 }
-
-interface TargetMetaInjectableMap {
-    meta: TargetMeta;
-    injectable: Object;
-}
