@@ -1,7 +1,6 @@
-import { ObjectFactory } from './../core/object-factory';
-import "reflect-metadata";
-import { DefaultObjectFactory } from "../impl/default-object-factory";
-import { Newable } from "../core/object-factory";
+import type { ObjectFactory } from './../core/object-factory.js';
+import { DefaultObjectFactory } from "../impl/default-object-factory.js";
+import type { Newable } from "../core/object-factory.js";
 
 export function Injectable(name: string, required?: boolean) {
     return function (constructor: Function) {

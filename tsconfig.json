@@ -1,31 +1,16 @@
 {
-    "compilerOptions": {
-      "target": "es5",
-      "module": "commonjs",
-      "noImplicitAny": false,
-      "removeComments": false,
-      "moduleResolution": "node",
-      "sourceMap": true,
-      "emitDecoratorMetadata": true,
-      "experimentalDecorators": true,
-      "noImplicitUseStrict": true,
-      "suppressImplicitAnyIndexErrors": true,
-      "allowSyntheticDefaultImports": true,
-      "lib": [
-        "es6",
-        "es2016",
-        "dom"
-      ],
-      "typeRoots": [
-        "./node_modules/@types"
-      ],
-      "baseUrl": "./",
-    },
-    "include": [
-      "src/**/*.ts",
-      "test/**/*.ts"
-    ],
-    "exclude": [
-      "./node_modules"
-    ]
-  }
+  "extends": "./tsconfig.build.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "noEmit": true,
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": false,
+    "verbatimModuleSyntax": false,
+    "strict": false,
+    "types": ["vitest/globals"],
+    "baseUrl": ".",
+    "paths": { "src/*": ["src/*"] }
+  },
+  "include": ["src/**/*.ts", "test/**/*.ts"]
+}

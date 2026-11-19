@@ -1,48 +1,73 @@
 {
   "name": "neat-di",
-  "version": "1.0.0",
-  "description": "Scoped di for singleton and prototype objects.",
-  "main": "index.js",
-  "scripts": {
-    "test": "karma start",
-    "tsc": "tsc -p tsconfig.json -w"
+  "version": "2.0.0",
+  "description": "Scope-based dependency injection for singleton and prototype objects.",
+  "keywords": [
+    "di",
+    "dependency-injection",
+    "ioc",
+    "scope",
+    "singleton",
+    "prototype",
+    "typescript",
+    "javascript",
+    "decorators"
+  ],
+  "homepage": "https://github.com/Ascentx/neat-di#readme",
+  "bugs": {
+    "url": "https://github.com/Ascentx/neat-di/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Ascentx/neat-di.git"
   },
-  "keywords": [
-    "di",
-    "inversify",
-    "scope",
-    "based",
-    "ioc",
-    "typescipt",
-    "javascipt",
-    "singleton",
-    "prototype"
-  ],
-  "author": "“Amrinder Singh <“amsingh@stonewain.com”>",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Ascentx/neat-di/issues"
+  "author": "Amrinder Singh <amsingh@stonewain.com>",
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./all": {
+      "types": "./dist/all.d.ts",
+      "default": "./dist/all.js"
+    },
+    "./src/all": {
+      "types": "./dist/all.d.ts",
+      "default": "./dist/all.js"
+    },
+    "./package.json": "./package.json"
   },
-  "homepage": "https://github.com/Ascentx/neat-di#readme",
-  "devDependencies": {
-    "jasmine-core": "^2.99.1",
-    "karma": "^2.0.0",
-    "karma-chrome-launcher": "^2.2.0",
-    "karma-jasmine": "^1.1.1",
-    "karma-typescript": "^3.0.12",
-    "webpack": "^3.11.0"
+  "files": [
+    "src",
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.build.json --noEmit",
+    "lint:package": "publint && attw --pack . --profile esm-only",
+    "prepublishOnly": "npm run clean && npm run build && npm test && npm run lint:package"
   },
   "dependencies": {
-    "@types/core-js": "^0.9.46",
-    "@types/jasmine": "^2.8.6",
-    "core-js": "^2.5.3",
-    "es6-shim": "^0.35.3",
-    "reflect-metadata": "^0.1.12",
-    "toposort": "^2.0.2",
-    "typescript": "^2.7.2"
+    "toposort": "^2.0.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "@types/toposort": "^2.0.7",
+    "vitest": "^3.2.4",
+    "publint": "^0.3.0",
+    "@arethetypeswrong/cli": "^0.18.0"
   }
 }

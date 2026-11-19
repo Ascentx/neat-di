@@ -1,8 +1,11 @@
+import './mocks/mock-di';
+import './mocks/mock-injectable';
+import './mocks/mock-injectable-2';
 import { MockInjectable6, MockInjectable4, MockInjectable2 } from './mocks/mock-injectable-2';
-import { ObjectFactory } from 'src/core/object-factory';
+import { ObjectFactory } from '../src/core/object-factory';
 import { MockDi } from "./mocks/mock-di";
 import {MockInjectable} from './mocks/mock-injectable';
-import { DefaultObjectFactory } from "src/all";
+import { DefaultObjectFactory } from '../src/all';
 
 describe('neat-di', () => {
     let of: ObjectFactory = DefaultObjectFactory.getInstance();

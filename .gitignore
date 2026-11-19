@@ -5,3 +5,6 @@ src/**/*.js.map
 test/**/*.js
 test/**/*.js.map
 coverage/
+dist/
+*.tgz
+npm-debug.log

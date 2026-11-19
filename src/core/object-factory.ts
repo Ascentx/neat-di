@@ -4,12 +4,12 @@ export interface ObjectFactory {
     getGlobalObject(name: string, constructorArgs?: Array<any>): any;
     removeGlobalObject(name: string): any;
     getScopedObject(name: string, scopeId: string, constructorArgs?: Array<any>): any;
-    removeScopedObjects(scopeId: string, name?: string): Array<any>;
+    removeScopedObjects(scopeId: string | null | undefined, name?: string): Array<any>;
     removeAllObjects(name: string): Array<any>;
     getObject(name: string, scopeId?: string, constructorArgs?: Array<any>): any;
     addToNameClassMap(name: string, className: Newable, isRequired?: boolean): void;
-    addToTargetMap(meta: TargetMeta);
-    init();
+    addToTargetMap(meta: TargetMeta): void;
+    init(): void;
 }
 
 export interface ObjectFactoryArgs {

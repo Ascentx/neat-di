@@ -1,6 +1,5 @@
-import "reflect-metadata";
-import { DefaultObjectFactory } from "../impl/default-object-factory";
-import { ObjectFactory } from "../core/object-factory";
+import { DefaultObjectFactory } from "../impl/default-object-factory.js";
+import type { ObjectFactory } from "../core/object-factory.js";
 
 export function InjectOut(name: string, scopeId?: string, constructorArgs?: Array<any>): any {
     return (target: Object, key: string) => {
@@ -10,11 +9,11 @@ export function InjectOut(name: string, scopeId?: string, constructorArgs?: Arra
             return of.getObject(name, scopeId, constructorArgs);
         };
 
-        const setter = function (newVal) {
+        const setter = function (_newVal: unknown) {
             throw "Cannot override an injected property."
         };
 
-        if (delete target[key]) {
+        if (delete (target as Record<string, unknown>)[key]) {
             // Create new property with getter and setter
             Object.defineProperty(target, key, {
                 get: getter,

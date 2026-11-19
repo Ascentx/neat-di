@@ -1,5 +1,5 @@
-import { ObjectFactory, ObjectFactoryArgs, Newable, TargetMeta} from "../core/object-factory";
-import * as tsort from "toposort";
+import type { ObjectFactory, ObjectFactoryArgs, Newable, TargetMeta } from "../core/object-factory.js";
+import tsort from "toposort";
 
 export class DefaultObjectFactory implements ObjectFactory {
 
@@ -8,7 +8,7 @@ export class DefaultObjectFactory implements ObjectFactory {
     private _contextObjectMap: {[key: string]: {[key: string]: any}} = {};
     private static _nameClassMap: {[key: string]: {
         clazz: Newable;
-        required: boolean;
+        required?: boolean;
     }} = {};
     private static _targetClasses: Array<Object> = [];
     private static _targetDeps: Array<Array<TargetMeta>> = [];
@@ -20,7 +20,7 @@ export class DefaultObjectFactory implements ObjectFactory {
 
     public init() {
         let graph = this._buildTargetGraph();
-        let sortedDeps =  tsort(graph).reverse();
+        let sortedDeps = tsort(graph).reverse();
         this._initializeTargetProperties(sortedDeps);
     }
 
@@ -40,19 +40,21 @@ export class DefaultObjectFactory implements ObjectFactory {
     }
 
     public createScopedObject(args: ObjectFactoryArgs): any {
-        if (!this._contextObjectMap.hasOwnProperty(args.scopeId)) {
-            this._contextObjectMap[args.scopeId] = {};
+        const scopeId = args.scopeId as string;
+
+        if (!this._contextObjectMap.hasOwnProperty(scopeId)) {
+            this._contextObjectMap[scopeId] = {};
         }
 
-        if (!this._contextObjectMap[args.scopeId].hasOwnProperty(args.name)) {
+        if (!this._contextObjectMap[scopeId].hasOwnProperty(args.name)) {
             if (!args.objectClass) {
                 throw 'Class with name ' + args.name + ' is never registered';
             }
-            this._contextObjectMap[args.scopeId][args.name] =
+            this._contextObjectMap[scopeId][args.name] =
                     new args.objectClass(args.constructorArgs)
         }
 
-        return this._contextObjectMap[args.scopeId][args.name];
+        return this._contextObjectMap[scopeId][args.name];
     }
 
     public addToNameClassMap(name: string, className: Newable, isRequired?: boolean): void {
@@ -75,14 +77,14 @@ export class DefaultObjectFactory implements ObjectFactory {
         });
     }
 
-    public removeScopedObjects(scopeId: string, name?: string): Array<any> {
+    public removeScopedObjects(scopeId: string | null | undefined, name?: string): Array<any> {
         let key: string,
             object: any,
             map: any,
             mapKey: any,
             objects: Array<any> = [];
 
-        if (this._contextObjectMap[scopeId] && name) {
+        if (scopeId != null && this._contextObjectMap[scopeId] && name) {
             object = this._contextObjectMap[scopeId][name];
             delete this._contextObjectMap[scopeId][name];
 
@@ -159,16 +161,15 @@ export class DefaultObjectFactory implements ObjectFactory {
         }
     }
 
-    private _buildTargetGraph(): Array<Array<Number>> {
-        let deps = DefaultObjectFactory._targetDeps,
-            graph = [],
-            own = [],
-            dep, i, j, targetName;
+    private _buildTargetGraph(): Array<[string, string]> {
+        const deps = DefaultObjectFactory._targetDeps,
+            graph: Array<[string, string]> = [];
+        let dep: string, i: number, j: number, targetName: string;
 
         for (i = 0; i < deps.length; i++) {
             for (j = 0; j < deps[i].length; j++) {
-                targetName = this._getNameFromTarget(deps[i][j].target.constructor)
-                dep = deps[i][j]['name'];
+                targetName = this._getNameFromTarget(deps[i][j].target.constructor) as string;
+                dep = deps[i][j].name;
                 graph[i + j] = [targetName, dep];
             }
         }
@@ -189,8 +190,8 @@ export class DefaultObjectFactory implements ObjectFactory {
         }
     }
 
-    private _getNameFromTarget(target: Function) {
-        let classes = DefaultObjectFactory._nameClassMap
+    private _getNameFromTarget(target: Function): string | undefined {
+        let classes = DefaultObjectFactory._nameClassMap;
 
         for (let key in classes) {
             if (classes[key].clazz === target) {
@@ -199,7 +200,7 @@ export class DefaultObjectFactory implements ObjectFactory {
         }
     }
 
-    private _getDepsOfTarget(name): Array<TargetMeta> {
+    private _getDepsOfTarget(name: string): Array<TargetMeta> {
         let target = DefaultObjectFactory._nameClassMap[name],
             classMap = DefaultObjectFactory._targetClasses,
             deps = DefaultObjectFactory._targetDeps,

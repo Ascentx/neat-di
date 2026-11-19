@@ -1,6 +1,5 @@
-import "reflect-metadata";
-import { DefaultObjectFactory } from "../impl/default-object-factory";
-import { ObjectFactory } from "../core/object-factory";
+import { DefaultObjectFactory } from "../impl/default-object-factory.js";
+import type { ObjectFactory } from "../core/object-factory.js";
 
 export function Inject(name: string, scopeId?: string, constructorArgs?: Array<any>): any {
     return (target: Object, key: string) => {

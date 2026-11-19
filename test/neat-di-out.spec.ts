@@ -1,7 +1,7 @@
-import { ObjectFactory } from 'src/core/object-factory';
+import { ObjectFactory } from '../src/core/object-factory';
 import { MockDiOut } from "./mocks/mock-di-out";
 import { MockInjectable } from './mocks/mock-injectable';
-import { DefaultObjectFactory } from "src/all";
+import { DefaultObjectFactory } from '../src/all';
 import { MockInjectable6, MockInjectable4, MockInjectable2 } from './mocks/mock-injectable-2';
 
 describe('neat-di-out', () => {
